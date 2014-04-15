@@ -7,7 +7,7 @@
   <link rel="stylesheet" type="text/css" href="../../css/foundation.css">
   <link rel="stylesheet" type="text/css" href="../../css/estilos.css">
   <title>helpet</title>
- 	
+
   <style>
 	#map-canvas {
         height: 50%;
@@ -17,6 +17,9 @@
         min-height: 240px;
         left: 5%;
       }
+  #map_canvas img {
+    max-width: none;
+  }
     </style>
 </head>
 <body>
@@ -38,7 +41,7 @@
       </section>
     </nav>
   </header>
-<div class="panel">  
+<div class="panel">
 <form data-abide="ajax" id="frmdatos" enctype="multipart/form-data">
 	<div class="row">
 		<h1>Ingresa tu anuncio</h1>
@@ -117,7 +120,7 @@
   <input type="hidden" name="lat" id="lat">
   <input type="hidden" name="lng" id="lng">
   <div id="map-canvas" class="large-6 columns" style="margin-bottom:2em;"></div>
-	
+
 
   <div class="row">
     <div class="large-12 columns">
@@ -182,7 +185,7 @@
   <a href="../../" class="button success">Volver a inicio</a>
   <a class="close-reveal-modal">&#215;</a>
 </div>
-            
+
 <script src="../../js/vendor/jquery.js"></script>
 <script src="../../js/foundation.min.js"></script>
 <script src="../../js/vendor/modernizr.js"></script>
@@ -284,7 +287,7 @@ $("#frmdatos").on('valid submit',function(g){
         }
     });
   }
-   
+
 });
 $(document).on('closed', '[data-reveal]', function () {
   window.location.href = "../../";

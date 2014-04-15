@@ -39,3 +39,6 @@ body{
 #fotos li a img{
 	max-height: 200px;
 }
+#map img {
+    max-width: none;
+}
