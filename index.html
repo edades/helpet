@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/foundation.css">
+  <link rel="stylesheet" type="text/css" href="css/estilos.css">
+  <script type="text/javascript"src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBk5gP2Eq_xVRDlfZwvmfPJnPpKt2XkBjk&sensor=false&libraries=places">
+  </script>
+  <title>helpet</title>
+</head>
+<body>
+  <header>
+    <nav class="top-bar" data-topbar>
+      <ul class="title-area">
+        <li class="name">
+          <h1><a href="#">Helpet</a></h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
+      </ul>
+
+      <section class="top-bar-section">
+        <ul class="right">
+          <li class="active"><a href="#">Buscar Mascota</a></li>
+          <li><a href="pet/add/">Crear Anuncio</a></li>
+          <li><a href="contact/">Contacto</a></li>
+        </ul>
+      </section>
+    </nav>
+  </header>
+
+  <section>
+    <article id="mapa_contenedor">
+      <div class="row">
+        <div class="large-12 columns">
+          <label>Ingresa una dirección referencial para buscar
+            <input type="text" id="buscarpet" placeholder="Calle 123, providencia"/>
+          </label>
+        </div>
+      </div>
+      <div data-alert class="alert-box info radius">
+        <span>Toca un icono en el mapa, y debajo se cargará la información correspondiente</span>
+        <a href="#" class="close">&times;</a>
+      </div>
+      <div id="map"></div>
+      <a href="" id="refrescar" class="button tiny expand">Refrescar Mapa</a>
+    </article>
+  </section>
+  <section>
+    <article>
+      <div class="panel" id="mascota">
+        <h3 id="titulo_anuncio"></h3>
+        <span><strong>Nombre: </strong><p id="nombre"></p></span>
+        <span><strong>Especie: </strong><p id="especie"></p></span>
+        <span><strong>Raza: </strong><p id="raza"></p></span>
+        <span><strong>Edad: </strong><p id="edad"></p></span>
+        <span><strong>Se distingue por: </strong><p id="distingue"></p></span>
+        <span><strong>Comuna: </strong><p id="comuna"></p></span>
+        <span><strong>Ciudad: </strong><p id="ciudad"></p></span>
+        <span><strong>Se extravió cerca de: </strong><p id="cercanoa"></p></span>
+        <span><strong>Fecha extravio: </strong><p id="fecha_extravio"></p></span>
+        <hr>
+          <ul class="small-block-grid-3 clearing.thumbs" data-clearing id="fotos">
+            <li><a id="foto1b" class="th" href=""><img id="foto1" src=""></a></li>
+            <li><a id="foto2b" class="th" href=""><img id="foto2" src=""></a></li>
+            <li><a id="foto3b" class="th" href=""><img id="foto3" src=""></a></li>
+          </ul>
+        <hr>
+        <span><strong>Dueño: </strong><p id="nombre_dueno"></p></span>
+        <span><strong>Correo: </strong><p id="correo"></p></span>
+        <span><strong>Teléfono: </strong><a href="" id="afono"><p id="fono"></p></a></span>
+        <span><strong>recompensa </strong><p id="recompensa" class="recompensa"></p></span>
+        <a href="" id="enviar_correo" class="button expand round">Contactar Dueño</a>
+      </div>
+    </article>
+  </section>
+
+  <footer>
+    
+  </footer>
+<script src="js/vendor/jquery.js"></script>
+<script src="js/foundation.min.js"></script>
+<script src="js/vendor/modernizr.js"></script>
+<script src="js/foundation/foundation.clearing.js"></script>
+<script type="text/javascript">
+//datos anuncio
+var titulo_anuncio=     "Perro Perdido en Providencia";
+var fecha_publicacion = "22/04/2014";
+//datos mascota
+var nombre =            "Bolt";
+var especie =           "Perro";
+var raza =              "Labrador";
+var edad =              "22";
+var distingue =         "Un collar rojo";
+var comuna =            "Providencia";
+var ciudad =            "Santiago";
+var cercanoa =          "Pedro de valdivia con Providencia"
+var fecha_extravio =    "20/04/2014";
+var fotos =             [ "img/pets/foto1.jpg", "img/pets/foto2.jpg","img/pets/foto3.jpg" ];
+//datos dueño
+var nombre_dueno =      "Roberto Dote";
+var correo  =           "edades@gmail.com";
+var fono =              "63471850";
+var recompensa  =       "100000";
+
+      function initialize() {
+        var mapOptions = {
+          zoom: 16
+        };
+        var map = new google.maps.Map(document.getElementById("map"),
+            mapOptions);
+
+        var input = /** @type {HTMLInputElement} */(
+            document.getElementById('buscarpet'));
+
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo('bounds', map);
+
+        google.maps.event.addListener(autocomplete, 'place_changed', function() {
+          var place = autocomplete.getPlace();
+            if (!place.geometry) {
+              return;
+            }
+
+            // If the place has a geometry, then present it on a map.
+            if (place.geometry.viewport) {
+              map.fitBounds(place.geometry.viewport);
+              map.setZoom(16);
+            } else {
+              map.setCenter(place.geometry.location);
+              map.setZoom(16);  // Why 17? Because it looks good.
+            }
+        });
+
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+              var pos = new google.maps.LatLng(position.coords.latitude,
+                                               position.coords.longitude);
+
+             $.getJSON( "lib/json.php", function( datax ) {
+                $.each( datax, function( key, val ) {
+              var posi = new google.maps.LatLng(datax[key]['lat'],datax[key]['lng']);
+              var iconBase = 'img/pin.png';
+              var marker = new google.maps.Marker({
+                  icon: iconBase,
+                  position: posi,
+                  map: map,
+                  title: datax[key]['titulo'],
+                  fecha_publicacion: datax[key]['fecha_pub'],
+                  nombre: datax[key]['nombre'],
+                  especie: datax[key]['especie'],
+                  raza: datax[key]['raza'],
+                  edad: datax[key]['edad'],
+                  distingue: datax[key]['distingue'],
+                  comuna: datax[key]['comuna'],
+                  ciudad: datax[key]['ciudad'],
+                  cercanoa: datax[key]['cerca'],
+                  fecha_extravio: datax[key]['fecha'],
+                  nombre_dueno: datax[key]['nombred'],
+                  correo: datax[key]['correo'],
+                  fono: datax[key]['telefono'],
+                  recompensa: datax[key]['recompensa']
+              });
+
+              google.maps.event.addListener(marker, 'click', function() {
+                $("#mascota").show();
+                $("#titulo_anuncio").text(marker.title);
+                $("#fecha_publicacion").text(marker.fecha_publicacion);
+                $("#nombre").text(marker.nombre);
+                $("#especie").text(marker.especie);
+                $("#raza").text(marker.raza);
+                $("#edad").text(marker.edad);
+                $("#distingue").text(marker.distingue);
+                $("#comuna").text(marker.comuna);
+                $("#ciudad").text(marker.ciudad);
+                $("#cercanoa").text(marker.cercanoa);
+                $("#fecha_extravio").text(marker.fecha_extravio);
+                $("#nombre_dueno").text(marker.nombre_dueno);
+                $("#correo").text(marker.correo);
+                $("#fono").text(marker.fono);
+                $("#afono").attr("href",'tel:'+marker.fono);
+                $("#recompensa").text("$ "+marker.recompensa);
+                $("#foto1").attr("src",fotos[0]);
+                $("#foto2").attr("src",fotos[1]);
+                $("#foto3").attr("src",fotos[2]);
+                $("#foto1b").attr("href",fotos[0]);
+                $("#foto2b").attr("href",fotos[1]);
+                $("#foto3b").attr("href",fotos[2]);
+                $("#enviar_correo").attr("href","mailto:"+marker.correo);
+              });
+            });
+          }); 
+
+              map.setCenter(pos);
+            }, function() {
+              handleNoGeolocation(true);
+            });
+          } else {
+            // Browser doesn't support Geolocation
+            handleNoGeolocation(false);
+          }
+
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+      $(document).foundation();
+      $("#refrescar").on('click',function(){
+        initialize();
+      });
+    </script>
+</body>
+</html>

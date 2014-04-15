@@ -1,0 +1,41 @@
+#logo{
+	padding:0px;
+	width: 60px;
+	margin: 0.7em;
+	float: left;
+}
+header{
+	border-bottom: 1px solid gray;
+	overflow: hidden;
+}
+header h1{
+	float: left;
+	margin-left:1.6em;
+	margin-top: 0.4em;
+}
+body{
+	font-size: 16px;
+	font-family: arial;
+}
+#map{
+	height: 300px;
+}
+#mapa_contenedor{
+	width: 100%;
+	margin: 0 auto;
+	padding: 2em;
+}
+#mascota{
+	display: none;
+}
+#mascota h3{
+	text-align: center;
+}
+.recompensa{
+	font-size: 1.4em;
+	color: rgb(50, 226, 50) !important;
+	font-weight: bold;
+}
+#fotos li a img{
+	max-height: 200px;
+}

@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" type="text/css" href="../../css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="../../css/foundation.css">
+  <link rel="stylesheet" type="text/css" href="../../css/estilos.css">
+  <title>helpet</title>
+ 	
+  <style>
+	#map-canvas {
+        height: 50%;
+        margin: 0 auto;
+        padding: 0px;
+        width: 90%;
+        min-height: 240px;
+        left: 5%;
+      }
+    </style>
+</head>
+<body>
+  <header>
+    <nav class="top-bar" data-topbar>
+      <ul class="title-area">
+        <li class="name">
+          <h1><a href="#">Helpet</a></h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
+      </ul>
+
+      <section class="top-bar-section">
+        <ul class="right">
+          <li><a href="../../">Buscar Mascota</a></li>
+          <li class="active"><a href="#">Crear Anuncio</a></li>
+          <li><a href="../contact/">Contacto</a></li>
+        </ul>
+      </section>
+    </nav>
+  </header>
+<div class="panel">  
+<form data-abide="ajax" id="frmdatos" enctype="multipart/form-data">
+	<div class="row">
+		<h1>Ingresa tu anuncio</h1>
+    <div class="large-12 columns">
+      <label>Titulo Anuncio <small>(Requerido)</small>
+            <input type="text" placeholder="Perrito extraviado en mi comuna" name="titulo" id="titulo" required/>
+      </label>
+      <small class="error">Ingresa un titulo para el anuncio. sólo texto</small>
+    </div>
+	</div>
+	<div class="row">
+    <h2>Datos de la Mascota</h2>
+		<div class="large-6 columns nombre">
+		  <label>Nombre <small>(Requerido)</small>
+	        <input type="text" placeholder="Pillin" name="nombre" id="nombre" required />
+	      </label>
+        <small class="error">Nombre de tu mascota</small>
+		</div>
+		<div class="large-6 columns fechae">
+	      <label>Fecha extravio <small>(Requerido)</small>
+	        <input type="text" placeholder="20/03/2013" name="fecha_extravio" id="fecha_extravio" required/>
+	      </label>
+        <small class="error">Ingresa una fecha apróximada dd/mm/yyyy</small>
+	    </div>
+	</div>
+	<div class="row">
+	    <div class="large-4 columns especie">
+	      <label>Especie <small>(Requerido)</small>
+	        <input type="text" placeholder="Perro" name="especie" id="especie" required/>
+	      </label>
+        <small class="error">Ingresa Especia (Perro, gato , hamster, etc)</small>
+	    </div>
+	    <div class="large-4 columns raza">
+	      <label>Raza <small>(Requerido)</small>
+	        <input type="text" placeholder="Pastor Alemán" name="raza" id="raza" required/>
+	      </label>
+        <small class="error">Ingresa la raza o especifica Quiltro</small>
+	    </div>
+	    <div class="large-4 columns edad">
+	      <label>Edad <small>(Requerido)</small>
+	        <input type="text" placeholder="8 Meses" name="edad" id="edad" required/>
+	      </label>
+        <small class="error">Ingrese una Edad (1 año, 3 meses, etc)</small>
+	    </div>
+	</div>
+	<div class="row">
+		<div class="large-12 columns distingue">
+			<label>Se distingue por <small>(Requerido)</small>
+				<input type="text" placeholder="Mancha blanca en la oreja derecha" name="distingue" id="distingue" required/>
+			</label>
+      <small class="error">Ingresa una caracteristica de tu mascota</small>
+		</div>
+	</div>
+	<div class="row">
+		<div class="large-6 columns comuna">
+			<label>Comuna <small>(Requerido)</small>
+				<input type="text" placeholder="Providencia" name="comuna" id="comuna" required />
+			</label>
+      <small class="error">Ingresa una Comuna</small>
+		</div>
+		<div class="large-6 columns ciudad">
+			<label>Ciudad <small>(Requerido)</small>
+				<input type="text" placeholder="Santiago" name="ciudad" id="ciudad" required/>
+			</label>
+      <small class="error">Ingresa una ciudad</small>
+		</div>
+	</div>
+	<div class="row">
+		<div class="large-12 columns cerca">
+			<label>Se extravió cerca de <small>(Requerido)</small>
+				<input type="text" id="cercade" placeholder="Calle 1, Santiago" name="cerca" required/>
+			</label>
+      <small class="error">Ingresa una dirección para poder mostrar en el mapa al buscar</small>
+		</div>
+	</div>
+  <input type="hidden" name="lat" id="lat">
+  <input type="hidden" name="lng" id="lng">
+  <div id="map-canvas" class="large-6 columns" style="margin-bottom:2em;"></div>
+	
+
+  <div class="row">
+    <div class="large-12 columns">
+      <ul class="small-block-grid-3">
+        <li>IMG 1 <input type="file" name="upimg" id="image">
+        <input type="hidden" name="MAX_FILE_SIZE" value="99999999">
+        </li>
+        <li>IMG 2 <input type="file" name="upimg2" id="image">
+        </li>
+        <li>IMG 3 <input type="file" name="upimg3" id="image">
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="large-12 columns nombred">
+		  <h2>Datos del Dueño</h2>
+    </div>
+	</div>
+
+	<div class="row">
+		  <div class="large-6 columns nombred">
+		    <label>Nombre Dueño <small>(Requerido)</small>
+	        <input type="text" placeholder="Juan Carlos Pérez" name="nombred" id="nombred" required/>
+	      </label>
+        <small class="error">Ingresa nombre del dueño (para contacto)</small>
+		  </div>
+		  <div class="large-6 columns correo">
+	      <label>Correo <small>(Requerido)</small>
+	        <input type="text" placeholder="jperez@gmail.com" name="correo" id="correo" required pattern="email"/>
+	      </label>
+        <small class="error">Ingresa un correo valido</small>
+	    </div>
+	</div>
+	<div class="row">
+		  <div class="large-6 columns fono">
+		    <label>Télefono <small>(Requerido)</small>
+	        <input type="text" placeholder="67729922" name="telefono" id="telefono" required pattern="number"/>
+	      </label>
+        <small class="error">Ingresa tu teléfono sólo números</small>
+		  </div>
+		  <div class="large-6 columns">
+	      <label>Recompensa
+	        <input type="text" placeholder="50000 (sin punto ni coma)" name="recompensa" id="recompensa" pattern="number"/>
+	      </label>
+	    </div>
+	</div>
+	<div class="row">
+		<div class="large-12 columns">
+			 <input type="submit" id="btnguardar" class="button expand" value="Guardar Anuncio">
+		</div>
+	</div>
+</form>
+</div>
+
+<div id="successmodal" class="reveal-modal" data-reveal>
+  <h2>Anuncio Guardado</h2>
+  <p class="lead">Podrás verlo en inicio en la dirección que indicaste</p>
+  <br>
+  <a href="../../" class="button success">Volver a inicio</a>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+            
+<script src="../../js/vendor/jquery.js"></script>
+<script src="../../js/foundation.min.js"></script>
+<script src="../../js/vendor/modernizr.js"></script>
+<script src="../../js/foundation/foundation.clearing.js"></script>
+<script src="../../js/foundation/foundation.abide.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+    <script>
+function initialize() {
+  var mapOptions = {
+    zoom: 16
+  };
+  var map = new google.maps.Map(document.getElementById('map-canvas'),
+    mapOptions);
+
+
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+              var pos = new google.maps.LatLng(position.coords.latitude,
+                                               position.coords.longitude);
+
+  var input = /** @type {HTMLInputElement} */(
+      document.getElementById('cercade'));
+
+  var autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo('bounds', map);
+
+  var infowindow = new google.maps.InfoWindow();
+  var marker = new google.maps.Marker({
+    map: map,
+    anchorPoint: new google.maps.Point(0, -29)
+  });
+
+  google.maps.event.addListener(autocomplete, 'place_changed', function() {
+    infowindow.close();
+    marker.setVisible(true);
+    var place = autocomplete.getPlace();
+    if (!place.geometry) {
+      return;
+    }
+
+    // If the place has a geometry, then present it on a map.
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } else {
+      map.setCenter(place.geometry.location);
+      map.setZoom(17);  // Why 17? Because it looks good.
+    }
+    marker.setIcon(/** @type {google.maps.Icon} */({
+      url: place.icon,
+      size: new google.maps.Size(71, 71),
+      origin: new google.maps.Point(0, 0),
+      anchor: new google.maps.Point(17, 34),
+      scaledSize: new google.maps.Size(35, 35)
+    }));
+    marker.setPosition(place.geometry.location);
+    marker.setVisible(true);
+
+    var address = '';
+    if (place.address_components) {
+      address = [
+        (place.address_components[0] && place.address_components[0].short_name || ''),
+        (place.address_components[1] && place.address_components[1].short_name || ''),
+        (place.address_components[2] && place.address_components[2].short_name || '')
+      ].join(' ');
+      $("#lat").val(place.geometry.location.lat());
+      $("#lng").val(place.geometry.location.lng());
+    }
+
+    infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+    infowindow.open(map, marker);
+  });
+
+
+   map.setCenter(pos);
+            }, function() {
+              handleNoGeolocation(true);
+            });
+          } else {
+            // Browser doesn't support Geolocation
+            handleNoGeolocation(false);
+          }
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+$("#frmdatos").on('valid submit',function(g){
+  g.stopPropagation();
+  g.preventDefault();
+  if (g.type === "valid"){
+    $.ajax({
+        data:  $("#frmdatos").serialize(),
+        url:   '../../lib/guardaranuncio.php',
+        type:  'post',
+        success:  function (response) {
+          if(response=="pasa"){
+            $('#successmodal').foundation('reveal', 'open');
+          }
+        }
+    });
+  }
+   
+});
+$(document).on('closed', '[data-reveal]', function () {
+  window.location.href = "../../";
+});
+
+$(document).foundation();
+</script>
+
+</body>
+</html>
