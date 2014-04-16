@@ -117,8 +117,8 @@
       <small class="error">Ingresa una dirección para poder mostrar en el mapa al buscar</small>
 		</div>
 	</div>
-  <input type="hidden" name="lat" id="lat">
-  <input type="hidden" name="lng" id="lng">
+  <input type="hidden" name="lat" id="lat" value="">
+  <input type="hidden" name="lng" id="lng" value="">
   <div id="map-canvas" class="large-6 columns" style="margin-bottom:2em;"></div>
 
 
@@ -183,6 +183,12 @@
   <p class="lead">Podrás verlo en inicio en la dirección que indicaste</p>
   <br>
   <a href="../../" class="button success">Volver a inicio</a>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+
+<div id="errorcerca" class="reveal-modal" data-reveal>
+  <h2>Error al guardar Dirección</h2>
+  <p class="lead">Por favor ingresa una dirección valida para poder registrar las coordenadas</p>
   <a class="close-reveal-modal">&#215;</a>
 </div>
 
@@ -276,20 +282,26 @@ $("#frmdatos").on('valid submit',function(g){
   g.stopPropagation();
   g.preventDefault();
   if (g.type === "valid"){
-    $.ajax({
-        data:  $("#frmdatos").serialize(),
-        url:   '../../lib/guardaranuncio.php',
-        type:  'post',
-        success:  function (response) {
-          if(response=="pasa"){
-            $('#successmodal').foundation('reveal', 'open');
+    if($("#lat").val()!='' && $("#lng").val()!=''){
+      $.ajax({
+          data:  $("#frmdatos").serialize(),
+          url:   '../../lib/guardaranuncio.php',
+          type:  'post',
+          success:  function (response) {
+            if(response=="pasa"){
+              $('#successmodal').foundation('reveal', 'open');
+            }
           }
-        }
-    });
+      });
+    }
+    else
+    {
+            $('#errorcerca').foundation('reveal', 'open');
+    }
   }
 
 });
-$(document).on('closed', '[data-reveal]', function () {
+$(document).on('closed', '#successmodal', function () {
   window.location.href = "../../";
 });
 
